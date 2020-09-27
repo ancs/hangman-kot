@@ -7,7 +7,6 @@ class Word(value: String) {
     var unmaskedValue = value
     var maskedValue = "_".repeat(value.length)
     var guessedChars = mutableListOf<String>()
-
     fun unmaskChars() {
         val indices = mutableListOf<Int>()
         guessedChars.forEach {
@@ -20,28 +19,18 @@ class Word(value: String) {
         indices.forEach { index ->
             maskedValue = maskedValue.replaceRange(index, index + 1, unmaskedValue[index].toString())
         }
-
     }
 
-    fun checkChar(string: String): Boolean {
-        return string in unmaskedValue
-    }
-
-    fun checkAlreadyGuessed(string: String): Boolean {
-        return string !in guessedChars
-    }
-
-    fun checkWin(): Boolean {
-        return unmaskedValue == maskedValue
-    }
-
+    fun checkChar(string: String) = string in unmaskedValue
+    fun checkAlreadyGuessed(string: String) = string !in guessedChars
+    fun checkWin() = unmaskedValue == maskedValue
 }
 
 class Game(playerName: String, word: Word) {
     private val name = playerName
     private var livesLeft = lives
     private var gameWord = word
-
+    private fun valChar(character: String) = Regex("^[A-Z]$").matches(character)
     fun start() {
         println("Game is starting...")
         while (livesLeft != 0 && !gameWord.checkWin()) {
@@ -56,7 +45,6 @@ class Game(playerName: String, word: Word) {
                     println("You already guessed that character")
                 else livesLeft -= 1
             } else println("Please enter a valid character")
-
         }
         if (gameWord.checkWin()) {
             println("You won. Score: $livesLeft")
@@ -69,13 +57,7 @@ class Game(playerName: String, word: Word) {
         println("Guess a character:")
         return readLine().toString().toUpperCase()
     }
-
-    private fun valChar(character: String): Boolean {
-        return Regex("^[A-Z]$").matches(character)
-    }
 }
-
-
 
 fun getName(): String {
     println("Enter Name:")
