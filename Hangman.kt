@@ -117,6 +117,4 @@ fun showScores() {
     menu()
 }
 
-fun main() {
-    menu()
-}
+fun main() = menu()
